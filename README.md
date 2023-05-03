@@ -29,3 +29,7 @@ mais les électeurs écrivent eux même le nom de la personne sur le bulletin
 1. Carte pour visualiser les votes par état
    https://plotly.com/python/choropleth-maps/
 2. ChatGPT : conversion de langage naturel en requête SQL
+
+
+# Sources
+https://www2.census.gov/geo/relfiles/cdsld18/natl/natl_cocd_delim.txt

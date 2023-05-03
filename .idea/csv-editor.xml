@@ -38,6 +38,20 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\ressources\rdm-data.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\ressources\tab20_cd11820_county20_natl.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="|" />
+            </Attribute>
+          </value>
+        </entry>
       </map>
     </option>
   </component>

@@ -32,4 +32,6 @@ mais les électeurs écrivent eux même le nom de la personne sur le bulletin
 
 
 # Sources
-https://www2.census.gov/geo/relfiles/cdsld18/natl/natl_cocd_delim.txt
+- 2020 Congressional District - County relationship : https://www.census.gov/geographies/reference-files/time-series/geo/relationship-files.2020.html#entitycd
+- US GeoJson : https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json
+- Oglala County GeoJson : https://github.com/johan/world.geo.json/blob/master/countries/USA/SD/Shannon.geo.json

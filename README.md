@@ -15,6 +15,7 @@ https://paul.brunet-zamansky.fr/cours/bdm.html
 - stage = GEN seulement
 - on prend en compte les special
 - checker le run-off
+- enlever le write-in et considérer les write-in ceux qui ont comme party "write-in"
 
 # Autre notes
 1. Compter le nombre d'état de chaque parti chaque année

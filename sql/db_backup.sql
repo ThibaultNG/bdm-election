@@ -49,7 +49,7 @@ CREATE TABLE candidate (
 );
 
 -- factual tables
-CREATE TABLE fait_de_vote (
+CREATE TABLE vote_fact (
     id_district INTEGER NOT NULL REFERENCES district(id_district),
     id_year INTEGER NOT NULL REFERENCES year(id_year),
     id_candidate INTEGER NOT NULL REFERENCES candidate(id_candidate),

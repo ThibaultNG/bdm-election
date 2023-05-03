@@ -41,7 +41,7 @@ CREATE TABLE person (
 
 CREATE TABLE candidate (
     id_candidate SERIAL PRIMARY KEY,
-    fusion_ticket_candidate BOOLEAN,
+    fusion_ticket BOOLEAN,
     id_party INTEGER,
     id_person INTEGER,
     CONSTRAINT fk_candidate_party FOREIGN KEY (id_party) REFERENCES party(id_party),

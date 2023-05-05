@@ -105,3 +105,15 @@ table th {
     margin-top: 4rem;
     text-align: center;
 }
+
+.return-button {
+    margin: 1rem;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}

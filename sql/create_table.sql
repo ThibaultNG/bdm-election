@@ -19,7 +19,7 @@ CREATE TABLE state (
 
 CREATE TABLE district (
     id_district SERIAL PRIMARY KEY,
-    district_number VARCHAR(2),
+    district_number VARCHAR(3),
     id_state INTEGER,
     CONSTRAINT fk_district_state FOREIGN KEY (id_state) REFERENCES state(id_state)
 );

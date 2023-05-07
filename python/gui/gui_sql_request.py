@@ -5,7 +5,7 @@ from gevent.pywsgi import WSGIServer
 from python.gui.table import generate_table
 
 # import CSS file
-app = Flask(__name__, static_folder='static', template_folder='template')
+app = Flask(__name__, static_folder='static', template_folder='templates')
 
 # Set the FLASK_ENV environment variable to "production"
 os.environ['FLASK_ENV'] = 'production'

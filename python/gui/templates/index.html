@@ -1,29 +1,42 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <title>Enter an SQL query</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-<h1>Entrez votre requête SQL</h1>
-<div class="query-container">
-    <div class="button-container">
-        <p>requête pré-faites</p>
-        <form class="query-buttons" method="post">
-            <input type="submit" name="button1" value="Afficher la liste des personnes">
-            <input type="submit" name="button2" value="Afficher la liste des années">
-            <input type="submit" name="button3" value="Afficher la liste des candidats avec nom des personnes et des parties">
-            <input type="submit" name="button4" value="Afficher la liste des candidats avec pour nom de famille : ">
-            <input type="text" name="input4" placeholder="nom ou prénom">
-        </form>
-    </div>
-    <div class="form-container">
-        <p>requête personnalisée</p>
-        <form method="post">
-            <textarea name="query" rows="10" cols="80"></textarea><br>
-            <input type="submit" name="submit" value="Envoyer">
-        </form>
-    </div>
-</div>
-</body>
+<html lang="fr">
+    <head>
+        <title>Enter an SQL query</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+        <h1>Entrez votre requête SQL</h1>
+        <div class="query-container">
+            <div class="button-container">
+                <p>Requête pré-faites</p>
+                <form class="query-buttons" method="get">
+                    <button type="submit" formaction="http://localhost:5000/persons">
+                        Afficher la liste des personnes
+                    </button>
+                    <button type="submit" formaction="http://localhost:5000/year">
+                        Afficher la liste des années
+                    </button>
+                    <button type="submit" formaction="http://localhost:5000/candidates">
+                        Afficher la liste des candidats avec nom des personnes et des parties
+                    </button>
+                    <button type="submit" formaction="http://localhost:5000/map">
+                        Afficher la carte
+                    </button>
+                </form>
+                <form class="query-buttons" method="get">
+                    <button type="submit" formaction="http://localhost:5000/candidate-by-name">
+                        Afficher la liste des candidats avec pour nom de famille :
+                    </button>
+                    <input type="text" name="input-name" placeholder="Nom ou prénom">
+                </form>
+            </div>
+            <div class="form-container">
+                <p>Requête personnalisée</p>
+                <form method="get">
+                    <textarea name="query" rows="10" cols="80"></textarea><br>
+                    <input type="submit" name="submit" value="Envoyer">
+                </form>
+            </div>
+        </div>
+    </body>
 </html>

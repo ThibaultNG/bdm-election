@@ -49,3 +49,5 @@ fig = px.choropleth(df, geojson=gdf_congressional_districts_dissolved, locations
                     )
 fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
 fig.show()
+
+html = fig.write_html("template/html_map.html")

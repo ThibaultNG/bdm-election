@@ -106,7 +106,7 @@ table th {
     text-align: center;
 }
 
-.return-button {
+button {
     margin: 1rem;
     padding: 0.5rem 1rem;
     font-size: 1rem;

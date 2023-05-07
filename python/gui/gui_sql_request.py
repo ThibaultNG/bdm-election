@@ -1,4 +1,3 @@
-import os
 from flask import Flask, request, render_template
 from gevent.pywsgi import WSGIServer
 from map_congressional_district import generate_map
@@ -6,9 +5,6 @@ from python.gui.table import generate_table
 
 # import CSS file
 app = Flask(__name__, static_folder='static', template_folder='templates')
-
-# Set the FLASK_ENV environment variable to "production"
-os.environ['FLASK_ENV'] = 'production'
 
 print("http://localhost:5000")
 
@@ -60,6 +56,55 @@ def candidate_by_name():
                 JOIN candidate c ON vf.id_candidate = c.id_candidate
                 JOIN person p ON c.id_person = p.id_person
                 WHERE p.person_name ILIKE '%' || '{request.args['input-name']}' || '%';
+            """
+    col_names, results = generate_table(sql_query)
+    return render_template('result.html', col_names=col_names, results=results)
+
+@app.route('/minnesota-1', methods=['GET'])
+def minnesota_1():
+    sql_query = f"""
+                SELECT
+                    pa.party_name,
+                    round(cast(SUM(vf.candidate_vote) as decimal) / cast(total_vote_all_districts as decimal),2) as "part des votes",
+                    SUM(vf.candidate_vote) AS party_vote_all_districts,
+                    total_vote_all_districts,
+                    y.year_label
+                FROM
+                    vote_fact vf
+                        JOIN district d ON vf.id_district = d.id_district
+                        JOIN state s ON d.id_state = s.id_state
+                        JOIN year y ON vf.id_year = y.id_year
+                        JOIN candidate c ON vf.id_candidate = c.id_candidate
+                        JOIN person pe ON c.id_person = pe.id_person
+                        JOIN party pa ON c.id_party = pa.id_party
+                        JOIN (
+                        SELECT
+                            SUM(subquery.total_vote) AS total_vote_all_districts,
+                            subquery.year_label
+                        FROM
+                            (
+                                SELECT DISTINCT
+                                    d.id_district,
+                                    total_vote,
+                                    y.year_label
+                                FROM
+                                    vote_fact vf
+                                        JOIN district d ON vf.id_district = d.id_district
+                                        JOIN state s ON d.id_state = s.id_state
+                                        JOIN year y ON vf.id_year = y.id_year
+                                WHERE
+                                        s.state_name = 'MINNESOTA'
+                            ) AS subquery
+                        GROUP BY
+                            subquery.year_label
+                    ) AS total_votes ON y.year_label = total_votes.year_label
+                WHERE
+                        s.state_name = 'MINNESOTA'
+                GROUP BY
+                    pa.party_name,
+                    total_votes.total_vote_all_districts,
+                    y.year_label
+                ORDER BY pa.party_name asc, y.year_label asc;
             """
     col_names, results = generate_table(sql_query)
     return render_template('result.html', col_names=col_names, results=results)

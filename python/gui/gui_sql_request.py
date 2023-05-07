@@ -1,7 +1,7 @@
 import os
 from flask import Flask, request, render_template
 from gevent.pywsgi import WSGIServer
-
+from map_congressional_district import generate_map
 from python.gui.table import generate_table
 
 # import CSS file
@@ -74,7 +74,9 @@ def custom_query():
 
 @app.route('/map', methods=['GET'])
 def choropleth_map():
-    return render_template('html_map.html')
+    generate_map()
+
+    return render_template('map.html')
 
 
 if __name__ == '__main__':

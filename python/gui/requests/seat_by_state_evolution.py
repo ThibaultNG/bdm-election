@@ -34,6 +34,38 @@ def seat_by_state_evolution_query(state):
         labels={"year_label": "Année", "party_name": "Partis politiques", "seat_count": "Nombre de sièges"},
         markers=True
     )
+
+
+    president_df = pd.read_csv("../../ressources/presidents.csv")
+
+    president_df[["Start Year", "End Year"]] = president_df["Years In Office"].str.split("-", expand=True).astype(int)
+    president_df["Background Color"] = president_df["Party"].map({"Democratic": "blue", "Republican": "red"})
+
+    # Creates shapes with the color of the party of the president + president name label
+    for _, row in president_df.iterrows():
+        party_color = row["Background Color"]
+        start_year = row["Start Year"]
+        end_year = row["End Year"]
+        fig.add_shape(
+            editable=False,
+            type="rect",
+            xref="x",
+            yref="paper",
+            x0=start_year,
+            y0=0,
+            x1=end_year,
+            y1=1,
+            fillcolor=party_color,
+            opacity=0.1,
+            layer="below",
+            line=dict(width=0),
+            label={
+                "text": row["President Name"],
+                "textposition": "top left",
+                "textangle": 20
+            }
+        )
+
     #fig.show()
 
     fig.update_xaxes(showgrid=False)

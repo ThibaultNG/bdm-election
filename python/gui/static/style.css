@@ -1,3 +1,8 @@
+html *
+{
+    font-family: Arial !important;
+}
+
 h1 {
     top: 0;
     left: 0;
@@ -8,6 +13,20 @@ h1 {
     text-align: center;
     z-index: 1;
 }
+
+h2 {
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 1rem;
+    background-color: #84bdff;
+    color: #000000;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    z-index: 1;
+}
+
 
 /* index.html */
 .button-container p,
@@ -20,7 +39,7 @@ h1 {
 
 .query-container {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     margin-top: 1rem;
     justify-content: center;
 }

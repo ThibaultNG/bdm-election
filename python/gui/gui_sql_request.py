@@ -60,6 +60,7 @@ def candidate_by_name():
     col_names, results = generate_table(sql_query)
     return render_template('result.html', col_names=col_names, results=results)
 
+
 @app.route('/minnesota-1', methods=['GET'])
 def minnesota_1():
     sql_query = f"""
@@ -127,13 +128,18 @@ def choropleth_map():
     return render_template("figure.html", figure=map_fig)
 
 
-@app.route("/graph", methods=["GET"])
+@app.route("/trend", methods=["GET"])
 def graph():
     with open("templates/seats_graph_div.html", "r", encoding="utf-8") as file:
-        graph = file.read()
+        seats_graph_div = file.read()
         file.close()
 
-    return render_template("figure.html", figure=graph)
+    with open("templates/vote_share_graph_div.html", "r", encoding="utf-8") as file:
+        vote_share_graph_div = file.read()
+        file.close()
+
+    return render_template("trend.html", seat_evolution=seats_graph_div, vote_share_evolution=vote_share_graph_div)
+
 
 if __name__ == '__main__':
     # Debug/Development

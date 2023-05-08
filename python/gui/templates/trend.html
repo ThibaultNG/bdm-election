@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Projet Élections</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+        <h1>Grandes tendances</h1>
+        <button class="return-button" onclick="location.href='/'">Accueil</button>
+
+        <h2>Évolution de la composition de la chambre des représentants</h2>
+        {{ seat_evolution|safe }}
+
+        <h2>Évolution de la part du vote national de chacun des deux partis</h2>
+        {{ vote_share_evolution|safe }}
+    </body>
+</html>

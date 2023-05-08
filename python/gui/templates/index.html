@@ -5,10 +5,12 @@
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
     </head>
     <body>
-        <h1>Entrez votre requête SQL</h1>
+        <h1>Statistiques sur les élections US (1976-2020)</h1>
+        <h2>DU Camille & NG Thibault</h2>
+
         <div class="query-container">
             <div class="button-container">
-                <p>Requêtes pré-faites</p>
+                <h2>Requêtes pré-calculées</h2>
                 <form class="query-buttons" method="get">
                     <button type="submit" formaction="http://localhost:5000/persons">
                         Afficher la liste des personnes
@@ -25,8 +27,8 @@
                     <button type="submit" formaction="http://localhost:5000/map">
                         Afficher la carte
                     </button>
-                    <button type="submit" formaction="http://localhost:5000/graph">
-                        Évolution des sièges
+                    <button type="submit" formaction="http://localhost:5000/trend">
+                        Grandes tendances
                     </button>
                 </form>
                 <form class="query-buttons" method="get">
@@ -37,7 +39,7 @@
                 </form>
             </div>
             <div class="form-container">
-                <p>Requête personnalisée</p>
+                <h2>Requête personnalisée</h2>
                 <form method="get">
                     <textarea name="query" rows="10" cols="80"></textarea>
                     <input type="submit" name="submit" value="Envoyer">

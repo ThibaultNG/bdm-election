@@ -16,7 +16,7 @@ https://paul.brunet-zamansky.fr/cours/bdm.html
 - on prend en compte les special
 - checker le run-off
 - enlever le write-in et considérer les write-in ceux qui ont comme party "write-in"
-- convertir les "nan" et les "WRITE-IN..*" en WRITE-IN
+- convertir les "nan" et les "WRITE-IN.*" en WRITE-IN
 - il manque le candidat 'WRITEIN' avec le party 'GREEN'
 
 # Autre notes

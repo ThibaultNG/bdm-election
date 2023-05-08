@@ -1,3 +1,5 @@
+import json
+
 from flask import Flask, request, render_template
 from gevent.pywsgi import WSGIServer
 from map_congressional_district import generate_map
@@ -12,17 +14,6 @@ print("http://localhost:5000")
 
 @app.route('/', methods=['GET'])
 def index():
-
-        # if check_kennedy_before_print :
-        #     with open('kennedy.json', 'r') as json_file:
-        #         json_data = json.load(json_file)
-        #         names = json_data['names']
-        #         tmp_results = results
-        #         results = []
-        #         for tmp_result in tmp_results:
-        #             print(tmp_result)
-        #             if tmp_result[7] in names:
-        #                 results.append(tmp_result)
     sql_query = "SELECT * FROM state"
     col_names, results = generate_table(sql_query)
     return render_template('index.html', col_names=col_names, results=results)
@@ -59,6 +50,16 @@ def candidate_by_name():
                 WHERE p.person_name ILIKE '%' || '{request.args['input-name']}' || '%';
             """
     col_names, results = generate_table(sql_query)
+    if str(request.args['input-name'].lower()) == 'kennedy':
+        with open('kennedy.json', 'r') as json_file:
+            json_data = json.load(json_file)
+            names = json_data['names']
+            tmp_results = results
+            results = []
+            for tmp_result in tmp_results:
+                print(tmp_result)
+                if tmp_result[7] in names:
+                    results.append(tmp_result)
     return render_template('result.html', col_names=col_names, results=results)
 
 @app.route('/evolve-vote-1', methods=['GET'])
@@ -118,18 +119,43 @@ def evolve_vote_1():
 
 
 
-@app.route('/custom-query', methods=['GET'])
+@app.route('/custom-query', methods=['POST'])
 def custom_query():
     sql_query = request.form["query"]
     col_names, results = generate_table(sql_query)
     return render_template('result.html', col_names=col_names, results=results)
 
 
-@app.route('/map', methods=['GET'])
+@app.route("/map", methods=["GET"])
 def choropleth_map():
-    generate_map()
+    # generate_map()
+    with open("templates/map_div.html", "r", encoding="utf-8") as file:
+        map_fig = file.read()
+        file.close()
 
-    return render_template('map.html')
+    return render_template("figure.html", figure=map_fig)
+
+
+@app.route("/trend", methods=["GET"])
+def graph():
+    with open("templates/seats_graph_div.html", "r", encoding="utf-8") as file:
+        seats_graph_div = file.read()
+        file.close()
+
+    with open("templates/vote_share_graph_div.html", "r", encoding="utf-8") as file:
+        vote_share_graph_div = file.read()
+        file.close()
+
+    with open("templates/state_evolution_div.html", "r", encoding="utf-8") as file:
+        state_evolution = file.read()
+        file.close()
+
+    return render_template(
+        "trend.html",
+        seat_evolution=seats_graph_div,
+        vote_share_evolution=vote_share_graph_div,
+        state_evolution=state_evolution
+    )
 
 
 if __name__ == '__main__':

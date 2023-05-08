@@ -21,17 +21,6 @@
                     <button type="submit" formaction="http://localhost:5000/candidates">
                         Afficher la liste des candidats avec nom des personnes et des parties
                     </button>
-                    <button type="submit" formaction="http://localhost:5000/evolve-vote-1">
-                        Afficher l'évolution des votes par Etat par Partie :
-                    </button>
-                    <select type="select" name="input-state">
-                        {% for row in results %}
-                            <option>{{ row[1] }}</option>
-                        {% endfor %}
-                    </select>
-                    <input type="text" name="input-party" placeholder="Partie">
-
-
                     <button type="submit" formaction="http://localhost:5000/trend">
                         Grandes tendances
                     </button>
@@ -45,10 +34,21 @@
                     </button>
                     <input type="text" name="input-name" placeholder="Nom ou prénom">
                 </form>
+                <form class="query-buttons" method="get">
+                    <button type="submit" formaction="http://localhost:5000/evolve-vote-1">
+                        Afficher l'évolution des votes par Etat par Partie :
+                    </button>
+                    <select type="select" name="input-state">
+                        {% for row in results %}
+                            <option>{{ row[1] }}</option>
+                        {% endfor %}
+                    </select>
+                    <input type="text" name="input-party" placeholder="Partie">
+                </form>
             </div>
             <div class="form-container">
                 <h2>Requête personnalisée</h2>
-                <form method="get">
+                <form method="post" action="http://localhost:5000/custom-query">
                     <textarea name="query" rows="10" cols="80"></textarea>
                     <input type="submit" name="submit" value="Envoyer">
                 </form>

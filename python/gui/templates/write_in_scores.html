@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Projet Élections</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Succès involontaire</h1>
+    <button class="return-button" onclick="location.href='/'">Accueil</button>
+
+    <h2>Candidats élus sans être présentés</h2>
+    <table class="result-table">
+        <tr>
+            {% for col_name in winner_col_names %}
+                <th>{{ col_name }}</th>
+            {% endfor %}
+        </tr>
+        {% for row in winner_results %}
+            <tr>
+                {% for item in row %}
+                    <td>{{ item }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+
+</body>
+</html>

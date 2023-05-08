@@ -158,6 +158,34 @@ def graph():
     )
 
 
+@app.route("/write-in", methods=["GET"])
+def write_in_scores():
+    sql_query = """
+        SELECT y.year_label, s.state_name, p.person_name
+        FROM vote_fact vf
+        JOIN year y ON vf.id_year = y.id_year
+        JOIN district d ON vf.id_district = d.id_district
+        JOIN candidate c ON vf.id_candidate = c.id_candidate
+        JOIN person p ON c.id_person = p.id_person
+        JOIN party pa ON pa.id_party = c.id_party
+        JOIN state s ON s.id_state = d.id_state
+        WHERE (vf.id_year, vf.id_district, vf.candidate_vote) IN (
+            SELECT id_year, id_district, MAX(candidate_vote)
+        FROM vote_fact
+        GROUP BY id_year, id_district
+        ) AND pa.party_name = 'WRITE-IN';
+    """
+    col_names, results = generate_table(sql_query)
+
+    col_names = ["Année", "État", "Nom"]
+
+    return render_template(
+        "write_in_scores.html",
+        winner_col_names=col_names,
+        winner_results=results
+    )
+
+
 if __name__ == '__main__':
     # Debug/Development
     # app.run(debug=True, host="0.0.0.0", port="5000")

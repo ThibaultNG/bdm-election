@@ -10,13 +10,14 @@ winning_candidate_by_year_and_district = """
 """
 
 all_write_in_winners = """
-    SELECT y.year_label, d.district_number, p.person_name, pa.party_name
+    SELECT y.year_label, s.state_name, p.person_name
     FROM vote_fact vf
     JOIN year y ON vf.id_year = y.id_year
     JOIN district d ON vf.id_district = d.id_district
     JOIN candidate c ON vf.id_candidate = c.id_candidate
     JOIN person p ON c.id_person = p.id_person
     JOIN party pa ON pa.id_party = c.id_party
+    JOIN state s ON s.id_state = d.id_state
     WHERE (vf.id_year, vf.id_district, vf.candidate_vote) IN (
         SELECT id_year, id_district, MAX(candidate_vote)
         FROM vote_fact

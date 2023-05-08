@@ -2,7 +2,6 @@ import json
 
 from flask import Flask, request, render_template
 from gevent.pywsgi import WSGIServer
-from map_congressional_district import generate_map
 from python.gui.graph import generate_graph_image
 from python.gui.table import generate_table
 
@@ -160,7 +159,8 @@ def graph():
 
 @app.route("/write-in", methods=["GET"])
 def write_in_scores():
-    sql_query = """
+
+    all_winners_query = """
         SELECT y.year_label, s.state_name, p.person_name
         FROM vote_fact vf
         JOIN year y ON vf.id_year = y.id_year
@@ -173,16 +173,45 @@ def write_in_scores():
             SELECT id_year, id_district, MAX(candidate_vote)
         FROM vote_fact
         GROUP BY id_year, id_district
-        ) AND pa.party_name = 'WRITE-IN';
+        ) AND c.write_in = True;
     """
-    col_names, results = generate_table(sql_query)
 
-    col_names = ["Année", "État", "Nom"]
+    winner_col_names, winner_results = generate_table(all_winners_query)
+
+    winner_col_names = ["Année", "État", "Nom"]
+
+    best_scores_query = """
+        SELECT y.year_label, s.state_name, p.person_name, vf.candidate_vote, vf.total_vote
+        FROM vote_fact vf
+        JOIN year y ON vf.id_year = y.id_year
+        JOIN district d ON vf.id_district = d.id_district
+        JOIN candidate c ON vf.id_candidate = c.id_candidate
+        JOIN person p ON c.id_person = p.id_person
+        JOIN party pa ON pa.id_party = c.id_party
+        JOIN state s ON s.id_state = d.id_state
+        WHERE c.write_in = True AND p.person_name <> 'WRITEIN'
+        ORDER BY vf.candidate_vote DESC
+    """
+
+    best_score_col_names, best_score_results = generate_table(best_scores_query)
+    best_score_col_names = ["Année", "État", "Nom", "Nombre de votes"]
+
+    winner_names = [row[2] for row in winner_results]
+
+    best_score_results = [list(row) for row in best_score_results]
+
+    for bs_row in best_score_results:
+        if bs_row[2] in winner_names:
+            bs_row[4] = True
+        else:
+            bs_row[4] = False
 
     return render_template(
         "write_in_scores.html",
-        winner_col_names=col_names,
-        winner_results=results
+        winner_col_names=winner_col_names,
+        winner_results=winner_results,
+        best_score_col_names=best_score_col_names,
+        best_score_results=best_score_results
     )
 
 

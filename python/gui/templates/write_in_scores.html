@@ -25,5 +25,29 @@
         {% endfor %}
     </table>
 
+    <h2>Candidats non présentés ayant eu le plus de votes</h2>
+    <table class="result-table">
+        <tr>
+            {% for col_name in best_score_col_names %}
+                <th>{{ col_name }}</th>
+            {% endfor %}
+        </tr>
+        {% for row in best_score_results %}
+            {% if row[4] %}
+                <tr bgcolor="#ffd700">
+                    {% for item in row[:-1] %}
+                        <td>{{ item }}</td>
+                    {% endfor %}
+                </tr>
+            {% else %}
+                <tr>
+                    {% for item in row[:-1] %}
+                        <td>{{ item }}</td>
+                    {% endfor %}
+                </tr>
+            {% endif %}
+        {% endfor %}
+    </table>
+
 </body>
 </html>

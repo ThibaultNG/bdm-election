@@ -92,6 +92,25 @@ input[type="submit"]:hover {
     background-color: #0069d9;
 }
 
+select[name="input-state"] {
+    margin: 1rem;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+    box-shadow: 0 0 0.25rem #ccc;
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+select[name="input-state"]:focus {
+    outline: none;
+    box-shadow: 0 0 0.5rem #007bff;
+}
+
+select[name="input-state"] option {
+    padding: 0.5rem;
+}
+
 /* result.html */
 table {
     border-collapse: collapse;

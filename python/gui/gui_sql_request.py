@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template
 from gevent.pywsgi import WSGIServer
 from map_congressional_district import generate_map
+from python.gui.graph import generate_graph_image
 from python.gui.table import generate_table
 
 # import CSS file
@@ -22,9 +23,9 @@ def index():
         #             print(tmp_result)
         #             if tmp_result[7] in names:
         #                 results.append(tmp_result)
-
-    return render_template('index.html')
-
+    sql_query = "SELECT * FROM state"
+    col_names, results = generate_table(sql_query)
+    return render_template('index.html', col_names=col_names, results=results)
 
 @app.route('/persons', methods=['GET'])
 def persons():
@@ -60,13 +61,13 @@ def candidate_by_name():
     col_names, results = generate_table(sql_query)
     return render_template('result.html', col_names=col_names, results=results)
 
-
-@app.route('/minnesota-1', methods=['GET'])
-def minnesota_1():
+@app.route('/evolve-vote-1', methods=['GET'])
+def evolve_vote_1():
     sql_query = f"""
                 SELECT
+                    s.state_name,
                     pa.party_name,
-                    round(cast(SUM(vf.candidate_vote) as decimal) / cast(total_vote_all_districts as decimal),2) as "part des votes",
+                    round(cast(SUM(vf.candidate_vote) as decimal) / cast(total_vote_all_districts as decimal),2) as "vote_part",
                     SUM(vf.candidate_vote) AS party_vote_all_districts,
                     total_vote_all_districts,
                     y.year_label
@@ -94,21 +95,27 @@ def minnesota_1():
                                         JOIN state s ON d.id_state = s.id_state
                                         JOIN year y ON vf.id_year = y.id_year
                                 WHERE
-                                        s.state_name = 'MINNESOTA'
+                                        s.state_name = '{request.args['input-state']}'
                             ) AS subquery
                         GROUP BY
                             subquery.year_label
                     ) AS total_votes ON y.year_label = total_votes.year_label
                 WHERE
-                        s.state_name = 'MINNESOTA'
+                        s.state_name = '{request.args['input-state']}'
                 GROUP BY
+                    s.state_name,
                     pa.party_name,
                     total_votes.total_vote_all_districts,
                     y.year_label
                 ORDER BY pa.party_name asc, y.year_label asc;
             """
     col_names, results = generate_table(sql_query)
+    if request.args['input-party'] != "":
+        generate_graph_image(results, request.args['input-state'], request.args['input-party'])
+        return render_template('graph.html', col_names=col_names, results=results)
+
     return render_template('result.html', col_names=col_names, results=results)
+
 
 
 @app.route('/custom-query', methods=['GET'])
@@ -118,36 +125,11 @@ def custom_query():
     return render_template('result.html', col_names=col_names, results=results)
 
 
-@app.route("/map", methods=["GET"])
+@app.route('/map', methods=['GET'])
 def choropleth_map():
-    # generate_map()
-    with open("templates/map_div.html", "r", encoding="utf-8") as file:
-        map_fig = file.read()
-        file.close()
+    generate_map()
 
-    return render_template("figure.html", figure=map_fig)
-
-
-@app.route("/trend", methods=["GET"])
-def graph():
-    with open("templates/seats_graph_div.html", "r", encoding="utf-8") as file:
-        seats_graph_div = file.read()
-        file.close()
-
-    with open("templates/vote_share_graph_div.html", "r", encoding="utf-8") as file:
-        vote_share_graph_div = file.read()
-        file.close()
-
-    with open("templates/state_evolution_div.html", "r", encoding="utf-8") as file:
-        state_evolution = file.read()
-        file.close()
-
-    return render_template(
-        "trend.html",
-        seat_evolution=seats_graph_div,
-        vote_share_evolution=vote_share_graph_div,
-        state_evolution=state_evolution
-    )
+    return render_template('map.html')
 
 
 if __name__ == '__main__':

@@ -6,9 +6,9 @@ def generate_table(sql_query):
     conn = psycopg2.connect("""
             host=127.0.0.1
             port=5432
-            dbname=bdm-election
+            dbname=election
             user=postgres
-            password=admin
+            password=camille
             """)
 
     # create a cursor object

@@ -21,14 +21,22 @@
                     <button type="submit" formaction="http://localhost:5000/candidates">
                         Afficher la liste des candidats avec nom des personnes et des parties
                     </button>
-                    <button type="submit" formaction="http://localhost:5000/minnesota-1">
-                        Afficher l'évolution des votes au Minnesota par partie par année
+                    <button type="submit" formaction="http://localhost:5000/evolve-vote-1">
+                        Afficher l'évolution des votes par Etat par Partie :
+                    </button>
+                    <select type="select" name="input-state">
+                        {% for row in results %}
+                            <option>{{ row[1] }}</option>
+                        {% endfor %}
+                    </select>
+                    <input type="text" name="input-party" placeholder="Partie">
+
+
+                    <button type="submit" formaction="http://localhost:5000/trend">
+                        Grandes tendances
                     </button>
                     <button type="submit" formaction="http://localhost:5000/map">
                         Afficher la carte
-                    </button>
-                    <button type="submit" formaction="http://localhost:5000/trend">
-                        Grandes tendances
                     </button>
                 </form>
                 <form class="query-buttons" method="get">

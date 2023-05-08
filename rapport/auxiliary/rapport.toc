@@ -1,5 +1,9 @@
-\babel@toc {french}{}\relax 
-\contentsline {section}{\numberline {1}Importation des données}{3}{section.1}%
-\contentsline {section}{\numberline {2}Interface graphique}{4}{section.2}%
-\contentsline {subsection}{\numberline {2.1}Carte}{4}{subsection.2.1}%
-\contentsline {section}{\numberline {3}Sources}{4}{section.3}%
+\babel@toc {french}{}\relax
+\contentsline {section}{\numberline {1} Organisation du groupe}{3}{section.1}%
+\contentsline {section}{\numberline {2} Choix technologiques}{3}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Importation des données}{3}{subsection.1.1}%
+\contentsline {subsection}{\numberline {2.2}Interface graphique}{4}{subsection.1.2}%
+\contentsline {paragraph}{\numberline {2.2.1}Carte}{4}{paragraph.1.2.1}%
+\contentsline {section}{\numberline {3} Modèle conceptuel des données}{3}{section.3}%
+\contentsline {subsection}{\numberline {4}Sources}{4}{section.4}%
+

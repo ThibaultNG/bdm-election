@@ -16,6 +16,8 @@ https://paul.brunet-zamansky.fr/cours/bdm.html
 - on prend en compte les special
 - checker le run-off
 - enlever le write-in et considérer les write-in ceux qui ont comme party "write-in"
+- convertir les "nan" et les "WRITE-IN..*" en WRITE-IN
+- il manque le candidat 'WRITEIN' avec le party 'GREEN'
 
 # Autre notes
 1. Compter le nombre d'état de chaque parti chaque année
@@ -23,7 +25,7 @@ https://paul.brunet-zamansky.fr/cours/bdm.html
 2. On cherche que les descendants de JFK
 
 3. Des candidats qui ne sont pas présentés (sur les bulletins de vote)
-mais les électeurs écrivent eux même le nom de la personne sur le bulletin 
+mais les électeurs écrivent eux même le nom de la personne sur le bulletin
 
 # Requêtes
 4. Montrer d'un côté les write-in qui ont été élus

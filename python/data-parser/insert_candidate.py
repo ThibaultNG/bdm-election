@@ -18,13 +18,14 @@ def insert_candidate():
     global_insert = ""
     no_write_in = True
 
-    insert_query = "INSERT INTO candidate(fusion_ticket, id_person, id_party)  VALUES \n"
+    insert_query = "INSERT INTO candidate(fusion_ticket, write_in, id_person, id_party)  VALUES \n"
     for index, row in candidate_data.iterrows():
 
-        if row["writein"]:
-            party_name = 'WRITE-IN'
-        else:
-            party_name = str(row["party_name"]).replace("'", "''")
+        # if row["writein"]:
+        #     party_name = 'WRITE-IN'
+        # else:
+        #     party_name = str(row["party_name"]).replace("'", "''")
+        party_name = str(row["party_name"]).replace("'", "''")
 
         person_name = str(row["person_name"]).replace("'", "''")
 
@@ -34,13 +35,14 @@ def insert_candidate():
             no_write_in = False
 
         insert_query += f"\t({row['fusion_ticket']}, "
+        insert_query += f"{row['writein']}, "
         insert_query += f"(SELECT (id_person) FROM person pe WHERE pe.person_name = '{person_name}'), "
 
         insert_query += f"(SELECT (id_party) FROM party pa WHERE pa.party_name = '{party_name}')),\n"
 
         if index % 1000 == 0:
             global_insert += insert_query[:-2] + ";\n\n\n"
-            insert_query = "INSERT INTO candidate(fusion_ticket, id_person, id_party)  VALUES \n"
+            insert_query = "INSERT INTO candidate(fusion_ticket, write_in, id_person, id_party)  VALUES \n"
 
     global_insert += insert_query[:-2] + ";"
 

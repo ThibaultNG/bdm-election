@@ -21,36 +21,28 @@
                     <button type="submit" formaction="http://localhost:5000/candidates">
                         Afficher la liste des candidats avec nom des personnes et des parties
                     </button>
-                </form>
-                <form class="query-buttons" method="get">
-                    <button type="submit" formaction="http://localhost:5000/candidate-by-name">
-                        Afficher la liste des candidats avec pour nom de famille :
-                    </button>
-                    <input type="text" name="input-name" placeholder="Nom ou prénom">
-                </form>
-                <form class="query-buttons" method="get">
-                    <button type="submit" formaction="http://localhost:5000/evolve-vote-1">
-                        Afficher l'évolution des votes par Etat par Partie :
-                    </button>
-                    <select name="input-state">
-                        {% for row in results %}
-                            <option>{{ row[1] }}</option>
-                        {% endfor %}
-                    </select>
-                    <input type="text" name="input-party" placeholder="Parti">
-                </form>
 
                 <h2>Requêtes pré-calculées</h2>
-                <form class="query-buttons" method="get">
                     <button type="submit" formaction="http://localhost:5000/trend">
                         1] Grandes tendances
                     </button>
-
-                    <button type="submit" formaction="http://localhost:5000/map">
-                        Afficher la carte
+                    <button type="submit" formaction="http://localhost:5000/candidate-by-name">
+                        2]Afficher la liste des candidats avec pour nom de famille :
                     </button>
+                        <input type="text" name="input-name" placeholder="Nom ou prénom">
+                    <button type="submit" formaction="http://localhost:5000/evolve-vote-1">
+                        3]Afficher l'évolution des votes par Etat par Partie :
+                    </button>
+                        <select name="input-state">
+                            {% for row in results %}
+                                <option>{{ row[1] }}</option>
+                            {% endfor %}
+                        </select>
                     <button type="submit" formaction="http://localhost:5000/write-in">
                         4] Succès involontaire
+                    </button>
+                    <button type="submit" formaction="http://localhost:5000/map">
+                        Afficher la carte
                     </button>
                 </form>
             </div>

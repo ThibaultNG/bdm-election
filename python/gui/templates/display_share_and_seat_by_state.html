@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <title>Projet Élections</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+        <h1>Part des votes et nombre de sièges pour {{ state }}</h1>
+        <button class="return-button" onclick="location.href='/'">Accueil</button>
+
+        <h2>Évolution de la part du vote de chacun des partis en {{ state }}</h2>
+        {{ vote_share_by_state_evolution | safe }}
+
+        <h2>Évolution du nombre de siège pour chaque partie en {{ state }}</h2>
+        {{ seat_by_state_evolution | safe }}
+
+    </body>
+</html>

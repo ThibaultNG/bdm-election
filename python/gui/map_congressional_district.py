@@ -2,6 +2,7 @@ import plotly.express as px
 import pandas as pd
 import geopandas as gpd
 
+
 def generate_map():
     # Congressional district / County relationship
     df_congressional_districts = pd.read_csv('../../ressources/tab20_cd11820_county20_natl.csv',
@@ -31,7 +32,8 @@ def generate_map():
     gdf_counties = gpd.read_file('../../ressources/geojson-counties.json')
 
     # Merge the geographical data to have the congressional districts of each county
-    gdf_congressional_districts = gdf_counties.merge(df_congressional_districts, left_on="id", right_on='fips', how='left')
+    gdf_congressional_districts = gdf_counties.merge(df_congressional_districts, left_on="id", right_on='fips',
+                                                     how='left')
 
     # Merge counties using the stcd => To have a map of congressional districts
     gdf_congressional_districts_dissolved = gdf_congressional_districts.dissolve(by="stcd")
@@ -48,12 +50,14 @@ def generate_map():
                         scope="usa",
                         labels={'rdm': 'Ma donnée'}
                         )
-    fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
+    fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0}, height=700)
     # fig.show()
 
-    fig.write_html("templates/map.html")
+    # fig.write_html("templates/map.html")
+    fig.write_html("templates/map_div.html", full_html=False)
 
     print("map generation finished")
 
 
-
+if __name__ == "__main__":
+    generate_map()

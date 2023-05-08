@@ -72,12 +72,23 @@ def custom_query():
     return render_template('result.html', col_names=col_names, results=results)
 
 
-@app.route('/map', methods=['GET'])
+@app.route("/map", methods=["GET"])
 def choropleth_map():
-    generate_map()
+    # generate_map()
+    with open("templates/map_div.html", "r", encoding="utf-8") as file:
+        map_fig = file.read()
+        file.close()
 
-    return render_template('map.html')
+    return render_template("figure.html", figure=map_fig)
 
+
+@app.route("/graph", methods=["GET"])
+def graph():
+    with open("templates/seats_graph_div.html", "r", encoding="utf-8") as file:
+        graph = file.read()
+        file.close()
+
+    return render_template("figure.html", figure=graph)
 
 if __name__ == '__main__':
     # Debug/Development

@@ -25,6 +25,10 @@ https://paul.brunet-zamansky.fr/cours/bdm.html
 3. Des candidats qui ne sont pas présentés (sur les bulletins de vote)
 mais les électeurs écrivent eux même le nom de la personne sur le bulletin 
 
+# Requêtes
+4. Montrer d'un côté les write-in qui ont été élus
+mais aussi les write-in qui ont reçu le plus de vote globalement
+
 # Points bonus
 1. Carte pour visualiser les votes par état
    https://plotly.com/python/choropleth-maps/
@@ -35,3 +39,4 @@ mais les électeurs écrivent eux même le nom de la personne sur le bulletin
 - 2020 Congressional District - County relationship : https://www.census.gov/geographies/reference-files/time-series/geo/relationship-files.2020.html#entitycd
 - US GeoJson : https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json
 - Oglala County GeoJson : https://github.com/johan/world.geo.json/blob/master/countries/USA/SD/Shannon.geo.json
+- US President dataset : https://github.com/awhstin/Dataset-List/blob/master/presidents.csv

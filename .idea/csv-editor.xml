@@ -24,6 +24,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\ressources\presidents.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\ressources\rdm-data.csv">
           <value>
             <Attribute>

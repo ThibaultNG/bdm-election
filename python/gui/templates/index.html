@@ -8,7 +8,7 @@
         <h1>Entrez votre requête SQL</h1>
         <div class="query-container">
             <div class="button-container">
-                <p>Requête pré-faites</p>
+                <p>Requêtes pré-faites</p>
                 <form class="query-buttons" method="get">
                     <button type="submit" formaction="http://localhost:5000/persons">
                         Afficher la liste des personnes
@@ -22,6 +22,9 @@
                     <button type="submit" formaction="http://localhost:5000/map">
                         Afficher la carte
                     </button>
+                    <button type="submit" formaction="http://localhost:5000/graph">
+                        Évolution des sièges
+                    </button>
                 </form>
                 <form class="query-buttons" method="get">
                     <button type="submit" formaction="http://localhost:5000/candidate-by-name">
@@ -33,7 +36,7 @@
             <div class="form-container">
                 <p>Requête personnalisée</p>
                 <form method="get">
-                    <textarea name="query" rows="10" cols="80"></textarea><br>
+                    <textarea name="query" rows="10" cols="80"></textarea>
                     <input type="submit" name="submit" value="Envoyer">
                 </form>
             </div>

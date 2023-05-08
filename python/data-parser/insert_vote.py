@@ -18,9 +18,10 @@ def insert_vote():
         "totalvotes",
     ]].rename(columns={
         "district": "district_number"
-    }).drop_duplicates(subset=["candidate","party"], keep="first").reset_index().drop(columns="index")
+    }).drop_duplicates(subset=["candidate", "party"], keep="first").reset_index().drop(columns="index")
 
-    insert_query = "INSERT INTO vote_fact(id_district, id_year, id_candidate, candidate_vote, total_vote, run_off_election, special_election) VALUES \n"
+    insert_query = "INSERT INTO vote_fact(id_district, id_year, id_candidate, candidate_vote, total_vote, " \
+                   "run_off_election, special_election) VALUES \n "
 
     global_insert = ""
 
@@ -46,7 +47,8 @@ def insert_vote():
 
         if index % 1000 == 0:
             global_insert += insert_query[:-2] + ";\n\n\n"
-            insert_query = "INSERT INTO vote_fact(id_district, id_year, id_candidate, candidate_vote, total_vote, run_off_election, special_election) VALUES \n"
+            insert_query = "INSERT INTO vote_fact(id_district, id_year, id_candidate, candidate_vote, total_vote, " \
+                           "run_off_election, special_election) VALUES \n "
 
     global_insert += insert_query[:-2] + ";"
 

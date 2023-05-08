@@ -30,7 +30,7 @@ def vote_share_evolution():
         x="year_label",
         y="share",
         color="party_name",
-        labels={"year_label": "Année", "party_name": "Partis politiques", "party_votes": "", "share": "Part des votes"},
+        labels={"year_label": "Année", "party_name": "Partis politiques", "share": "Part des votes"},
         markers=True,
     )
 

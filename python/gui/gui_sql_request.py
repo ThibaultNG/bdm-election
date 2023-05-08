@@ -138,7 +138,16 @@ def graph():
         vote_share_graph_div = file.read()
         file.close()
 
-    return render_template("trend.html", seat_evolution=seats_graph_div, vote_share_evolution=vote_share_graph_div)
+    with open("templates/state_evolution_div.html", "r", encoding="utf-8") as file:
+        state_evolution = file.read()
+        file.close()
+
+    return render_template(
+        "trend.html",
+        seat_evolution=seats_graph_div,
+        vote_share_evolution=vote_share_graph_div,
+        state_evolution=state_evolution
+    )
 
 
 if __name__ == '__main__':

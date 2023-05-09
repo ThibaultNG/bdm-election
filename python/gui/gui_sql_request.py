@@ -4,6 +4,7 @@ from flask import Flask, request, render_template
 from gevent.pywsgi import WSGIServer
 from python.gui.graph import generate_graph_image
 from python.gui.table import generate_table
+from python.gui.requests.trend_by_state.state_seat_evolution import get_state_seat_evolution_graph
 
 # import CSS file
 app = Flask(__name__, static_folder='static', template_folder='templates')
@@ -119,6 +120,9 @@ def evolve_vote_1():
     return render_template('display_result.html', col_names=col_names, results=results)
 
 
+
+
+
 @app.route('/custom-query', methods=['POST'])
 def custom_query():
     sql_query = request.form["query"]
@@ -173,6 +177,39 @@ def trend():
         year_list=year_list,
         map_div=map_div,
         selected_year=selected_year
+    )
+
+
+@app.route("/state-trend", methods=["GET"])
+def state_trend():
+
+    selected_state = request.args.get('selected-state')
+    if not selected_state:
+        selected_state = "MINNESOTA"
+
+    seats_evolution_graph = get_state_seat_evolution_graph(selected_state)
+
+    # with open("templates/vote_share_graph_div.html", "r", encoding="utf-8") as file:
+    #     vote_share_graph_div = file.read()
+    #     file.close()
+    #
+    # with open("templates/state_evolution_div.html", "r", encoding="utf-8") as file:
+    #     state_evolution = file.read()
+    #     file.close()
+
+    col, res = generate_table("""
+        SELECT s.state_name FROM state s;
+    """)
+
+    state_list = res
+
+    return render_template(
+        "page/state_trend.html",
+        selected_state=selected_state,
+        state_list=state_list,
+        seat_evolution=seats_evolution_graph,
+        # vote_share_evolution=vote_share_graph_div,
+        # state_evolution=state_evolution,
     )
 
 

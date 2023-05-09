@@ -51,7 +51,7 @@ def candidate_by_name():
             """
     col_names, results = generate_table(sql_query)
     if str(request.args['input-name'].lower()) == 'kennedy':
-        with open('kennedy.json', 'r') as json_file:
+        with open('../../ressources/kennedy.json', 'r') as json_file:
             json_data = json.load(json_file)
             names = json_data['names']
             tmp_results = results
@@ -142,7 +142,7 @@ def all_maps():
 
 
 @app.route("/trend", methods=["GET"])
-def graph():
+def trend():
     selected_year = request.args.get('map-chosen-year')
     if not selected_year:
         selected_year = 2020
@@ -173,6 +173,50 @@ def graph():
         year_list=year_list,
         map_div=map_div,
         selected_year=selected_year
+    )
+
+
+@app.route("/irish-connection", methods=["GET"])
+def irish_connection():
+
+    sql_query = """
+        SELECT y.year_label, s.state_name, p.person_name, vf.candidate_vote
+        FROM vote_fact vf
+        JOIN year y ON vf.id_year = y.id_year
+        JOIN district d ON vf.id_district = d.id_district
+        JOIN candidate c ON vf.id_candidate = c.id_candidate
+        JOIN person p ON c.id_person = p.id_person
+        JOIN party pa ON pa.id_party = c.id_party
+        JOIN state s ON s.id_state = d.id_state
+        WHERE 
+            (vf.id_year, vf.id_district, vf.candidate_vote) IN (
+                SELECT id_year, id_district, MAX(candidate_vote)
+                FROM vote_fact
+                GROUP BY id_year, id_district
+            ) 
+            AND 
+            p.person_name LIKE '%KENNEDY%'
+        ORDER BY y.year_label DESC
+    """
+
+    col_names, results = generate_table(sql_query)
+    col_names = ["Année", "État", "Nom"]
+
+    results = [list(row) for row in results]
+
+    kennedy_list = ["JOSEPH P KENNEDY II", "JOSEPH P KENNEDY III", "KATHLEEN KENNEDY TOWNSEND", "PATRICK J KENNEDY"]
+
+    for row in results:
+        row[3] = False
+        if row[2] in kennedy_list:
+            row[3] = True
+
+    print(results)
+
+    return render_template(
+        "page/irish_connection.html",
+        col_names=col_names,
+        results=results
     )
 
 

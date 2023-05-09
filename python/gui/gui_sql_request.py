@@ -17,18 +17,19 @@ def index():
     col_names, results = generate_table(sql_query)
     return render_template('index.html', col_names=col_names, results=results)
 
+
 @app.route('/persons', methods=['GET'])
 def persons():
     sql_query = "SELECT * FROM person"
     col_names, results = generate_table(sql_query)
-    return render_template('result.html', col_names=col_names, results=results)
+    return render_template('display_result.html', col_names=col_names, results=results)
 
 
 @app.route('/year', methods=['GET'])
 def year():
     sql_query = "SELECT * FROM year"
     col_names, results = generate_table(sql_query)
-    return render_template('result.html', col_names=col_names, results=results)
+    return render_template('display_result.html', col_names=col_names, results=results)
 
 
 @app.route('/candidates', methods=['GET'])
@@ -36,7 +37,7 @@ def candidates():
     sql_query = "SELECT * FROM candidate JOIN party p on candidate.id_party = p.id_party JOIN person p2 on " \
                 "p2.id_person = candidate.id_person "
     col_names, results = generate_table(sql_query)
-    return render_template('result.html', col_names=col_names, results=results)
+    return render_template('display_result.html', col_names=col_names, results=results)
 
 
 @app.route('/candidate-by-name', methods=['GET'])
@@ -59,7 +60,8 @@ def candidate_by_name():
                 print(tmp_result)
                 if tmp_result[7] in names:
                     results.append(tmp_result)
-    return render_template('result.html', col_names=col_names, results=results)
+    return render_template('display_result.html', col_names=col_names, results=results)
+
 
 @app.route('/evolve-vote-1', methods=['GET'])
 def evolve_vote_1():
@@ -114,29 +116,37 @@ def evolve_vote_1():
         generate_graph_image(results, request.args['input-state'], request.args['input-party'])
         return render_template('graph.html', col_names=col_names, results=results)
 
-    return render_template('result.html', col_names=col_names, results=results)
-
+    return render_template('display_result.html', col_names=col_names, results=results)
 
 
 @app.route('/custom-query', methods=['POST'])
 def custom_query():
     sql_query = request.form["query"]
     col_names, results = generate_table(sql_query)
-    return render_template('result.html', col_names=col_names, results=results)
+    return render_template('display_result.html', col_names=col_names, results=results)
 
 
 @app.route("/map", methods=["GET"])
-def choropleth_map():
-    # generate_map()
-    with open("templates/map_div.html", "r", encoding="utf-8") as file:
-        map_fig = file.read()
+def all_maps():
+    selected_year = request.args.get('map-chosen-year')
+    if not selected_year:
+        selected_year = 2020
+
+    year_list = [year for year in range(1976, 2021, 2)]
+
+    with open(f"templates/map/{selected_year}_map_div.html", "r", encoding="utf-8") as file:
+        map_div = file.read()
         file.close()
 
-    return render_template("figure.html", figure=map_fig)
+    return render_template("seat_map.html", selected_map=map_div, selected_year=selected_year, year_list=year_list)
 
 
 @app.route("/trend", methods=["GET"])
 def graph():
+    selected_year = request.args.get('map-chosen-year')
+    if not selected_year:
+        selected_year = 2020
+
     with open("templates/seats_graph_div.html", "r", encoding="utf-8") as file:
         seats_graph_div = file.read()
         file.close()
@@ -149,17 +159,25 @@ def graph():
         state_evolution = file.read()
         file.close()
 
+    with open(f"templates/map/{selected_year}_map_div.html", "r", encoding="utf-8") as file:
+        map_div = file.read()
+        file.close()
+
+    year_list = [year for year in range(1976, 2021, 2)]
+
     return render_template(
-        "trend.html",
+        "display_trend.html",
         seat_evolution=seats_graph_div,
         vote_share_evolution=vote_share_graph_div,
-        state_evolution=state_evolution
+        state_evolution=state_evolution,
+        year_list=year_list,
+        map_div=map_div,
+        selected_year=selected_year
     )
 
 
 @app.route("/write-in", methods=["GET"])
 def write_in_scores():
-
     all_winners_query = """
         SELECT y.year_label, s.state_name, p.person_name
         FROM vote_fact vf
@@ -207,7 +225,7 @@ def write_in_scores():
             bs_row[4] = False
 
     return render_template(
-        "write_in_scores.html",
+        "display_write_in_scores.html",
         winner_col_names=winner_col_names,
         winner_results=winner_results,
         best_score_col_names=best_score_col_names,

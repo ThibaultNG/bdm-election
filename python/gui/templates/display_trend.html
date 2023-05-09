@@ -8,6 +8,9 @@
     <body>
         <h1>Grandes tendances</h1>
         <button class="return-button" onclick="location.href='/'">Accueil</button>
+        <button type="submit" formaction="http://localhost:5000/map">
+            Afficher la carte
+        </button>
 
         <h2>Évolution de la composition de la chambre des représentants</h2>
         {{ seat_evolution|safe }}
@@ -17,6 +20,22 @@
 
         <h2>Évolution du nombre d’états ayant une majorité d’élus d’un parti ou de l’autre</h2>
         {{ state_evolution|safe }}
+
+        <h2>Carte des sièges par district pour {{ selected_year }}</h2>
+
+        {{ map_div|safe }}
+
+        <form method="get" action="/trend" >
+            <h3>Choisir une autre année </h3>
+            <select name="map-chosen-year" onchange="sub">
+                {% for year in year_list %}
+                    <option>{{ year }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">
+                Choisir
+            </button>
+        </form>
 
     </body>
 </html>

@@ -5,6 +5,7 @@ from gevent.pywsgi import WSGIServer
 from python.gui.graph import generate_graph_image
 from python.gui.table import generate_table
 from python.gui.requests.trend_by_state.state_seat_evolution import get_state_seat_evolution_graph
+from python.gui.requests.trend_by_state.state_vote_share_evolution import get_state_vote_share_evolution_graph
 
 # import CSS file
 app = Flask(__name__, static_folder='static', template_folder='templates')
@@ -189,6 +190,8 @@ def state_trend():
 
     seats_evolution_graph = get_state_seat_evolution_graph(selected_state)
 
+    vote_share_evolution_graph = get_state_vote_share_evolution_graph(selected_state)
+
     # with open("templates/vote_share_graph_div.html", "r", encoding="utf-8") as file:
     #     vote_share_graph_div = file.read()
     #     file.close()
@@ -208,7 +211,7 @@ def state_trend():
         selected_state=selected_state,
         state_list=state_list,
         seat_evolution=seats_evolution_graph,
-        # vote_share_evolution=vote_share_graph_div,
+        vote_share_evolution=vote_share_evolution_graph,
         # state_evolution=state_evolution,
     )
 

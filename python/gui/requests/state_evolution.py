@@ -58,20 +58,19 @@ def state_evolution():
     equal["party"] = "EQUAL"
     republican["party"] = "REPUBLICAN"
 
-    number_of_state_by_party = pd.concat([democrat, equal, republican], ignore_index=True)
-    print(number_of_state_by_party)
-
+    number_of_state_by_party = pd.concat([democrat, republican, equal], ignore_index=True)
 
     fig = px.line(
         data_frame=number_of_state_by_party,
         x="year_label",
         y="number_of_states",
         color="party",
-        labels={"year_label": "Année", "number_of_states": "Nombre d'états"},
+        labels={"year_label": "Année", "number_of_states": "Nombre d'états", "party": "Parti politique"},
         markers=True,
     )
 
     president_df = pd.read_csv("../../../ressources/presidents.csv")
+
 
     president_df[["Start Year", "End Year"]] = president_df["Years In Office"].str.split("-", expand=True).astype(int)
     president_df["Background Color"] = president_df["Party"].map({"Democratic": "blue", "Republican": "red"})

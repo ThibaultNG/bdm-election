@@ -3,12 +3,20 @@ import psycopg2
 
 def generate_table(sql_query):
     # create a connection to the database
+    # conn = psycopg2.connect("""
+    #         host=127.0.0.1
+    #         port=5432
+    #         dbname=election
+    #         user=postgres
+    #         password=camille
+    #         """)
+
     conn = psycopg2.connect("""
             host=127.0.0.1
             port=5432
-            dbname=election
+            dbname=bdm-election
             user=postgres
-            password=camille
+            password=admin
             """)
 
     # create a cursor object

@@ -92,7 +92,7 @@ input[type="submit"]:hover {
     background-color: #0069d9;
 }
 
-select[name="input-state"] {
+select {
     margin: 1rem;
     padding: 0.5rem;
     font-size: 1rem;
@@ -102,12 +102,12 @@ select[name="input-state"] {
     transition: box-shadow 0.2s ease-in-out;
 }
 
-select[name="input-state"]:focus {
+select:focus {
     outline: none;
     box-shadow: 0 0 0.5rem #007bff;
 }
 
-select[name="input-state"] option {
+select option {
     padding: 0.5rem;
 }
 

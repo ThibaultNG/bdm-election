@@ -62,7 +62,7 @@ def vote_share_evolution_by_state_query(state):
         markers=True,
     )
 
-    president_df = pd.read_csv("../../ressources/presidents.csv")
+    president_df = pd.read_csv("../../../ressources/presidents.csv")
 
     president_df[["Start Year", "End Year"]] = president_df["Years In Office"].str.split("-", expand=True).astype(int)
     president_df["Background Color"] = president_df["Party"].map({"Democratic": "blue", "Republican": "red"})
@@ -96,7 +96,7 @@ def vote_share_evolution_by_state_query(state):
     fig.update_xaxes(showgrid=False)
     fig.update_yaxes(showgrid=False)
 
-    fig.write_html(file="templates/vote_share_by_state_graph_div.html", full_html=False)
+    fig.write_html(file="../templates/vote_share_by_state_graph_div.html", full_html=False)
 
     print("Vote share by state evolution finished")
 

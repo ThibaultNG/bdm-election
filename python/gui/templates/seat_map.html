@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <title>Projet Élections</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+
+        <h1>Carte des sièges par district pour {{ selected_year }}</h1>
+
+        {{ selected_map|safe }}
+
+        <form method="get" action="/map" >
+            <h3>Choisir une autre année </h3>
+            <select name="map-chosen-year" onchange="sub">
+                {% for year in year_list %}
+                    <option>{{ year }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">
+                Choisir
+            </button>
+        </form>
+        <button class="return-button" onclick="location.href='/'">Accueil</button>
+    </body>
+</html>

@@ -13,7 +13,7 @@
 
         <form method="get" action="/map" >
             <h3>Choisir une autre année </h3>
-            <select name="map-chosen-year" onchange="sub">
+            <select name="map-chosen-year">
                 {% for year in year_list %}
                     <option>{{ year }}</option>
                 {% endfor %}

@@ -204,7 +204,7 @@ def state_trend():
         SELECT s.state_name FROM state s;
     """)
 
-    state_list = res
+    state_list = [row[0] for row in res]
 
     return render_template(
         "page/state_trend.html",

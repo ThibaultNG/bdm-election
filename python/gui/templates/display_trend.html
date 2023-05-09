@@ -8,9 +8,11 @@
     <body>
         <h1>Grandes tendances</h1>
         <button class="return-button" onclick="location.href='/'">Accueil</button>
-        <button type="submit" formaction="http://localhost:5000/map">
-            Afficher la carte
-        </button>
+        <form action="/map" method="get">
+            <button type="submit" formaction="http://localhost:5000/map">
+                Afficher la carte uniquement
+            </button>
+        </form>
 
         <h2>Évolution de la composition de la chambre des représentants</h2>
         {{ seat_evolution|safe }}

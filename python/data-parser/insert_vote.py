@@ -35,7 +35,7 @@ def insert_vote():
 
         if row["special"]:
             continue
-        if row["runoff"]:
+        if row["runoff"] == True:
             continue
 
         run_off = str(row['runoff'])

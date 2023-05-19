@@ -218,7 +218,7 @@ def state_trend():
 @app.route("/irish-connection", methods=["GET"])
 def irish_connection():
 
-    sql_query = """
+    sql_query_winner = """
         SELECT y.year_label, s.state_name, p.person_name, vf.candidate_vote
         FROM vote_fact vf
         JOIN year y ON vf.id_year = y.id_year
@@ -238,7 +238,7 @@ def irish_connection():
         ORDER BY y.year_label DESC
     """
 
-    col_names, results = generate_table(sql_query)
+    col_names, results = generate_table(sql_query_winner)
     col_names = ["Année", "État", "Nom"]
 
     results = [list(row) for row in results]
@@ -250,12 +250,26 @@ def irish_connection():
         if row[2] in kennedy_list:
             row[3] = True
 
-    print(results)
+    sql_query_person = f"""
+                SELECT p.person_name, p.id_person
+                FROM person p
+                WHERE p.person_name ILIKE '%KENNEDY%';
+            """
+    col_names_person, results_person = generate_table(sql_query_person)
+
+    results_person = [list(row) for row in results_person]
+
+    for row in results_person:
+        row[1] = False
+        if row[0] in kennedy_list:
+            row[1] = True
 
     return render_template(
         "page/irish_connection.html",
         col_names=col_names,
-        results=results
+        results=results,
+        col_names_person=["Nom"],
+        results_person=results_person
     )
 
 

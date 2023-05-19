@@ -1,4 +1,4 @@
-from python.gui.table import generate_table
+from python.gui.requests.table import generate_table
 import plotly.express as px
 import pandas as pd
 

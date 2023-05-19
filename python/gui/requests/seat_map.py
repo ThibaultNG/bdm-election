@@ -2,7 +2,7 @@ import plotly.express as px
 import pandas as pd
 import geopandas as gpd
 
-from python.gui.table import generate_table
+from python.gui.requests.table import generate_table
 
 
 def generate_seat_map(chosen_year):

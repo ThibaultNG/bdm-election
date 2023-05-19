@@ -1,6 +1,0 @@
-\babel@toc {french}{}\relax 
-\contentsline {section}{\numberline {1}Choix technologiques}{3}{section.1}%
-\contentsline {subsection}{\numberline {1.1}Importation des données}{3}{subsection.1.1}%
-\contentsline {subsection}{\numberline {1.2}Interface graphique}{4}{subsection.1.2}%
-\contentsline {paragraph}{Carte}{4}{section*.2}%
-\contentsline {section}{\numberline {2}Sources}{4}{section.2}%

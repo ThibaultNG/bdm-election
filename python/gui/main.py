@@ -2,8 +2,7 @@ import json
 
 from flask import Flask, request, render_template
 from gevent.pywsgi import WSGIServer
-from python.gui.graph import generate_graph_image
-from python.gui.table import generate_table
+from python.gui.requests.table import generate_table
 from python.gui.requests.trend_by_state.state_seat_evolution import get_state_seat_evolution_graph
 from python.gui.requests.trend_by_state.state_vote_share_evolution import get_state_vote_share_evolution_graph
 
@@ -52,16 +51,16 @@ def candidate_by_name():
                 WHERE p.person_name ILIKE '%' || '{request.args['input-name']}' || '%';
             """
     col_names, results = generate_table(sql_query)
-    if str(request.args['input-name'].lower()) == 'kennedy':
-        with open('../../ressources/kennedy.json', 'r') as json_file:
-            json_data = json.load(json_file)
-            names = json_data['names']
-            tmp_results = results
-            results = []
-            for tmp_result in tmp_results:
-                print(tmp_result)
-                if tmp_result[7] in names:
-                    results.append(tmp_result)
+    # if str(request.args['input-name'].lower()) == 'kennedy':
+    #     with open('../../ressources/kennedy.json', 'r') as json_file:
+    #         json_data = json.load(json_file)
+    #         names = json_data['names']
+    #         tmp_results = results
+    #         results = []
+    #         for tmp_result in tmp_results:
+    #             print(tmp_result)
+    #             if tmp_result[7] in names:
+    #                 results.append(tmp_result)
     return render_template('display_result.html', col_names=col_names, results=results)
 
 

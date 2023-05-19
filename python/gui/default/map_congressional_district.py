@@ -5,7 +5,7 @@ import geopandas as gpd
 
 def generate_map():
     # Congressional district / County relationship
-    df_congressional_districts = pd.read_csv('../../ressources/tab20_cd11820_county20_natl.csv',
+    df_congressional_districts = pd.read_csv('../../../ressources/tab20_cd11820_county20_natl.csv',
                                              dtype={"GEOID_CD118_20": str, "GEOID_COUNTY_20": str},
                                              delimiter="|")
 
@@ -29,7 +29,7 @@ def generate_map():
     ]).rename(columns={"GEOID_CD118_20": "stcd", "GEOID_COUNTY_20": "fips"})
 
     # Geographical data of all counties
-    gdf_counties = gpd.read_file('../../ressources/geojson-counties.json')
+    gdf_counties = gpd.read_file('../../../ressources/geojson-counties.json')
 
     # Merge the geographical data to have the congressional districts of each county
     gdf_congressional_districts = gdf_counties.merge(df_congressional_districts, left_on="id", right_on='fips',
@@ -39,7 +39,7 @@ def generate_map():
     gdf_congressional_districts_dissolved = gdf_congressional_districts.dissolve(by="stcd")
 
     # Random values for all congressional districts
-    df = pd.read_csv("../../ressources/rdm-data.csv",
+    df = pd.read_csv("../../../ressources/rdm-data.csv",
                      dtype={"stcd": str},
                      delimiter=";")
 

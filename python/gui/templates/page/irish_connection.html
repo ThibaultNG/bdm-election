@@ -33,5 +33,30 @@
                 {% endif %}
             {% endfor %}
         </table>
+
+{#        <h2>Liste de tous les candidats portant le nom de Kennedy</h2>#}
+{#        <label>En rouge : Le nom des candidats qui ne sont pas descendants de Joseph Kennedy Sr.</label>#}
+{#        <table class="result-table">#}
+{#            <tr>#}
+{#                {% for col_name in col_names_person %}#}
+{#                    <th>{{ col_name }}</th>#}
+{#                {% endfor %}#}
+{#            </tr>#}
+{#            {% for row in results_person %}#}
+{#                {% if not row[3] %}#}
+{#                    <tr bgcolor="#ffb5b5">#}
+{#                        {% for item in row[:-1] %}#}
+{#                            <td>{{ item }}</td>#}
+{#                        {% endfor %}#}
+{#                    </tr>#}
+{#                {% else %}#}
+{#                    <tr>#}
+{#                        {% for item in row[:-1] %}#}
+{#                            <td>{{ item }}</td>#}
+{#                        {% endfor %}#}
+{#                    </tr>#}
+{#                {% endif %}#}
+{#            {% endfor %}#}
+{#        </table>#}
     </body>
 </html>

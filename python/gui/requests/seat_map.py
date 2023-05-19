@@ -66,7 +66,7 @@ def generate_seat_map(chosen_year):
         if len(st) == 1:
             st = "0" + st
 
-        if st+cd == "3000":
+        if st + cd == "3000":
             return "3001"
         return st + cd
 
@@ -100,5 +100,5 @@ def generate_seat_map(chosen_year):
 
 
 if __name__ == "__main__":
-    for year in range(1976,2021,2):
+    for year in range(1976, 2021, 2):
         generate_seat_map(year)
